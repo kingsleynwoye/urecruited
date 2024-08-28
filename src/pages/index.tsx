@@ -32,7 +32,7 @@ export default function Home() {
             alt="Brand"
             width={500}
             height={500}
-            className="w-[80%] bg-cover"
+            className="w-[80%] bg-cover z-50"
           />
         </section>
       </main>
