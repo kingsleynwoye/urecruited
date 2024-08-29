@@ -1,7 +1,9 @@
 import { FormEvent, useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { Archivo } from "next/font/google";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import Head from "next/head";
+import Link from "next/link";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -10,17 +12,47 @@ type Message = {
   sender: "user" | "bot";
 };
 
+type Job = {
+  _id: number;
+  name: string;
+  company: string;
+  position: string;
+  jobDescription: string;
+};
+
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<null | string>(null);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const interviewsRef = useRef<HTMLDivElement>(null);
   const startNowRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const response = await fetch("/api/jobs");
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data: Job[] = await response.json();
+        setJobs(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchJobs();
+  }, []);
 
   const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -50,40 +82,37 @@ export default function Home() {
     const formDataMessage = `
         Name: ${formData.name}
         Company: ${formData.company}
-        Position ${formData.position}
-        Job Description
-: ${formData.jobDescription}
+        Position: ${formData.position}
+        Job Description: ${formData.jobDescription}
       `;
 
     if (formDataMessage.trim()) {
       setIsLoading(true);
-      const userMessage: Message = { text: formDataMessage, sender: "user" };
-      setMessages([...messages, userMessage]);
 
       try {
-        const response = await fetch("/api/chat", {
+        const response = await fetch("/api/jobs", {
+          // Update the endpoint here
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: formDataMessage }),
+          body: JSON.stringify({
+            name: formData.name,
+            company: formData.company,
+            position: formData.position,
+            jobDescription: formData.jobDescription,
+          }),
         });
 
-        const data = await response.json();
-        // console.log(data);
-        const botMessage: Message = { text: data.text, sender: "bot" };
-        setMessages([...messages, userMessage, botMessage]);
+        if (!response.ok) {
+          throw new Error("Failed to create job");
+        }
 
-        // Set the response message and open the modal
-        setModalMessage(data.text);
-        setIsModalOpen(true);
+        const data = await response.json();
+
+        router.push(`/job/${data._id}`);
       } catch (error) {
         console.error("Error:", error);
-        const errorMessage: Message = {
-          text: "Error getting response from bot",
-          sender: "bot",
-        };
-        setMessages([...messages, userMessage, errorMessage]);
       } finally {
         setIsLoading(false); // Reset loading state
 
@@ -97,6 +126,10 @@ export default function Home() {
       }
     }
   };
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
+
   return (
     <>
       <Head>
@@ -260,6 +293,9 @@ export default function Home() {
               className="absolute top-0 w-full h-full bg-center bg-cover"
               style={{
                 backgroundImage: "url(/background.png)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             >
               <span
@@ -271,8 +307,8 @@ export default function Home() {
               <div className="items-center flex flex-wrap">
                 <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
                   <div className="">
-                    <h1 className="text-white font-semibold text-6xl md:text-8xl">
-                      Welcome
+                    <h1 className="text-white font-semibold text-4xl md:text-7xl">
+                      URECRUITED
                     </h1>
                     <p className="mt-4 text-lg text-gray-200">
                       Ace Every Interview Question with Confidence Inside Your
@@ -329,7 +365,7 @@ export default function Home() {
                       <h6 className="text-xl font-semibold text-black">
                         Talk Freely
                       </h6>
-                      <p className="mt-2 mb-4 text-gray-500">
+                      <p className="mt-2 mb-4 text-black">
                         Talk freely with the AI and get feedback on your answers
                       </p>
                     </div>
@@ -357,7 +393,7 @@ export default function Home() {
                       <h6 className="text-xl font-semibold text-black">
                         Keep a History
                       </h6>
-                      <p className="mt-2 mb-4 text-gray-500">
+                      <p className="mt-2 mb-4 text-black">
                         Review your interviews to improve your results
                       </p>
                     </div>
@@ -386,7 +422,7 @@ export default function Home() {
                       <h6 className="text-xl font-semibold text-black">
                         Progress Tracking
                       </h6>
-                      <p className="mt-2 mb-4 text-gray-500">
+                      <p className="mt-2 mb-4 text-black">
                         Follow the metrics to see your progression
                       </p>
                     </div>
@@ -414,7 +450,7 @@ export default function Home() {
                       <h6 className="text-xl font-semibold text-black">
                         Made with love
                       </h6>
-                      <p className="mt-2 mb-4 text-gray-500">
+                      <p className="mt-2 mb-4 text-black">
                         Crafted with care to help you achieve your dreams
                       </p>
                     </div>
@@ -477,54 +513,27 @@ export default function Home() {
           <article>
             <h2 className="text-3xl font-extrabold text-white">Interviews</h2>
             <section className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
-              <article className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200">
-                <div className="p-4 space-y-5">
-                  <div>
-                    <h3>Role: Software Engineer</h3>
-                    <h4>Company: Goggle</h4>
-                    <h5>Candidate: John Doe</h5>
+              {jobs.map((job) => (
+                <article
+                  key={job._id}
+                  className="bg-[#212121] bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
+                >
+                  <div className="p-4 space-y-5">
+                    <div>
+                      <h3>Role: {job.position}</h3>
+                      <h4>Company: {job.company}</h4>
+                      <h5>Candidate: {job.name}</h5>
+                    </div>
+                    <div>
+                      <Link href={`/job/${job._id}`}>
+                        <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-14 md:h-12 w-full rounded-full">
+                          Review
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-14 md:h-12 w-full rounded-full">
-                    Review
-                  </button>
-                </div>
-              </article>
-              <article className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200">
-                <div className="p-4 space-y-5">
-                  <div>
-                    <h3>Role: Software Engineer</h3>
-                    <h4>Company: Goggle</h4>
-                    <h5>Candidate: John Doe</h5>
-                  </div>
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-14 md:h-12 w-full rounded-full">
-                    Review
-                  </button>
-                </div>
-              </article>
-              <article className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200">
-                <div className="p-4 space-y-5">
-                  <div>
-                    <h3>Role: Software Engineer</h3>
-                    <h4>Company: Goggle</h4>
-                    <h5>Candidate: John Doe</h5>
-                  </div>
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-14 md:h-12 w-full rounded-full">
-                    Review
-                  </button>
-                </div>
-              </article>
-              <article className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200">
-                <div className="p-4 space-y-5">
-                  <div>
-                    <h3>Role: Software Engineer</h3>
-                    <h4>Company: Goggle</h4>
-                    <h5>Candidate: John Doe</h5>
-                  </div>
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-14 md:h-12 w-full rounded-full">
-                    Review
-                  </button>
-                </div>
-              </article>
+                </article>
+              ))}
             </section>
           </article>
         </section>
