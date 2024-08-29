@@ -518,11 +518,11 @@ export default function Home() {
                   key={job._id}
                   className="bg-[#212121] bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
                 >
-                  <div className="p-4 space-y-5">
-                    <div>
-                      <h3>Role: {job.position}</h3>
-                      <h4>Company: {job.company}</h4>
-                      <h5>Candidate: {job.name}</h5>
+                  <div className="p-4 space-y-3">
+                    <div className="text-center">
+                      <h3 className="font-bold">{job.position}</h3>
+                      <h4 className="pb-4 text-base">{job.company}</h4>
+                      <h5 className="text-base">Candidate: {job.name}</h5>
                     </div>
                     <div>
                       <Link href={`/job/${job._id}`}>
