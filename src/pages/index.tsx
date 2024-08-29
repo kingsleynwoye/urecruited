@@ -21,7 +21,7 @@ type Job = {
 };
 
 export default function Home() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  // const [messages, setMessages] = useState<Message[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -671,7 +671,7 @@ Collaborate and work with other team members to ensure we are building the right
                   isLoading ? "cursor-wait" : "cursor-pointer"
                 }`}
               >
-                {isLoading ? "Submitting..." : "Submit"}
+                {isLoading ? "Sending..." : "Send"}
               </button>
             </form>
           </div>
