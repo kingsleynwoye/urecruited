@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { Archivo } from "next/font/google";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -25,9 +26,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Slug = ({ job }: any) => {
+  const router = useRouter();
+
   if (!job) {
     return null;
   }
+
   return (
     <>
       <Head>
@@ -40,14 +44,18 @@ const Slug = ({ job }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={archivo.className}>
-        <section className="flex flex-col items-center p-8">
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md max-w-lg w-full">
-            <h1 className="text-2xl font-bold mb-4">{job.position}</h1>
-            <h2 className="text-xl font-semibold mb-2">{job.company}</h2>
-            <h3 className="text-lg text-gray-700 mb-2">
-              Candidate: {job.name}
-            </h3>
-            <p className="text-gray-600">{job.jobDescription}</p>
+        <section className="flex flex-col p-5 md:p-10">
+          <div className="flex justify-between">
+            <div className="mb-4">
+              <h1 className="text-2xl font-normal">{job.position}</h1>
+              <h2 className="text-lg font-light">{job.company}</h2>
+            </div>
+            <button
+              className="bg-white text-black h-10 w-20 rounded-full"
+              onClick={() => router.back()}
+            >
+              Go Back
+            </button>
           </div>
         </section>
       </main>
