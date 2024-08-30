@@ -470,7 +470,7 @@ export default function Home() {
                 <h2 className="text-2xl font-bold mb-4">Master Every Topic</h2>
                 <p className="text-gray-400 mb-6 text-center md:text-left">
                   Sharpen your answer to every question through our AI-powered
-                  interview and Improve your answers through real-time feedback
+                  interview
                 </p>
               </div>
               <div className="md:w-6/12 max-w-lg">
@@ -490,8 +490,24 @@ export default function Home() {
                 </h2>
                 <p className="text-gray-400 mb-6 text-center md:text-left">
                   Get expert advice on how to show your expertise in each
-                  question effectively and Improve your answers through
-                  real-time feedback
+                  question effectively
+                </p>
+              </div>
+              <div className="md:w-6/12 max-w-lg">
+                <Image
+                  height={500}
+                  width={500}
+                  className="rounded-md border-none"
+                  src="/background.png"
+                  alt="Background"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between">
+              <div className="md:w-5/12">
+                <h2 className="text-2xl font-bold mb-4">Real-Time Feedback</h2>
+                <p className="text-gray-400 mb-6 text-center md:text-left">
+                  Improve your answers through real-time feedback
                 </p>
               </div>
               <div className="md:w-6/12 max-w-lg">
