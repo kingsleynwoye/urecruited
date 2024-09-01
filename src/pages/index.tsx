@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
+import { Loader } from "@/components/loader";
+import { Error } from "@/components/error";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -40,7 +42,7 @@ export default function Home() {
       try {
         const response = await fetch("/api/jobs");
         if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+          console.error(`Error: ${response.status}`);
         }
         const data: Job[] = await response.json();
         setJobs(data);
@@ -60,10 +62,68 @@ export default function Home() {
 
   // Form state management
   const [formData, setFormData] = useState({
-    name: "",
-    company: "",
-    position: "",
-    jobDescription: "",
+    name: "John Doe",
+    company: "OpenAI",
+    position: "Software Engineer",
+    jobDescription: `Responsibilities
+
+Work collaboratively with the team, to craft a thoughtful, long-term technical strategy that anticipates future needs while being pragmatic about what’s needed today.
+
+Constantly delivering applications and solutions.
+
+Participating in software requirement review, preliminary and critical design, integration readiness review, and software acceptance review.
+
+Design, build and maintain scalable backend systems.
+
+Identify performance issues and bugs, and provide solutions to these problems.
+
+Work with other team members to ensure we are building the right products.
+
+Software validation, testing and approval.
+
+Delegating tasks/projects to the team members.
+
+Collaboration with the team to identify and fix technical problems.
+
+Analyzing users’ needs and then finding applications to serve them.
+
+Conduct security audits to identify areas of improvement.
+
+Guiding the team through technical issues and challenges.
+
+Delegating tasks and achieving daily, weekly, and monthly goals.
+
+Keeping up-to-date with industry trends and development.
+
+Updating work schedules and performing troubleshooting as required.
+
+Qualifications
+
+University degree in Informational Technology, Computer Science, Software Engineering, or a related subject.
+
+At least 4 years of commercial experience in a similar role.
+
+Create software technical documentation.
+
+Proficient experience working on a variety of software development projects.
+
+Ability to work to a strict deadline.
+
+Comfortable with a variety of languages such as Java, Node.js/Express, GO, Ruby, React, as well as MongoDB, SQL, Postgres databases, etc.
+
+Deep knowledge of the cloud infrastructure (Heroku, AWS, Digital Ocean, etc.), microservices, and development of APIs.
+
+Demonstratable track record of success in developing and implementing a comprehensive technology strategy that is aligned with and supports the current and future business goals of the company.
+
+Strong Engineering background with previous hands-on development and deployment of production-level code.
+
+Possess a broad understanding of how software fits into the overall system.
+
+Well-versed in Software Architecture and Design - You should be able to spot flaws in the existing architecture and design. You would help us refactor and re-architecture the code for easier and faster development.
+
+Participate in code reviews.
+
+Collaborate and work with other team members to ensure we are building the right product.`,
   });
 
   const handleFormChange = (
@@ -105,7 +165,7 @@ export default function Home() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to create job");
+          console.error("Failed to create job");
         }
 
         const data = await response.json();
@@ -127,8 +187,8 @@ export default function Home() {
     }
   };
 
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
+  if (loading) return <Loader />;
+  if (error) return <Error />;
 
   return (
     <>
@@ -464,7 +524,7 @@ export default function Home() {
           ref={featuresRef}
           className="bg-black text-gray-white container mx-auto py-16 px-4 md:px-20"
         >
-          <div className="space-y-12">
+          <div className="space-y-5">
             <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between">
               <div className="md:w-5/12">
                 <h2 className="text-2xl font-bold mb-4">Master Every Topic</h2>
@@ -478,8 +538,8 @@ export default function Home() {
                   height={500}
                   width={500}
                   className="rounded-md border-none"
-                  src="/background.png"
-                  alt="Background"
+                  src="/feature1.png"
+                  alt="Feature"
                 />
               </div>
             </div>
@@ -498,8 +558,8 @@ export default function Home() {
                   height={500}
                   width={500}
                   className="rounded-md border-none"
-                  src="/background.png"
-                  alt="Background"
+                  src="/feature2.png"
+                  alt="Feature"
                 />
               </div>
             </div>
@@ -515,8 +575,8 @@ export default function Home() {
                   height={500}
                   width={500}
                   className="rounded-md border-none"
-                  src="/background.png"
-                  alt="Background"
+                  src="/feature3.png"
+                  alt="Feature"
                 />
               </div>
             </div>
@@ -528,7 +588,7 @@ export default function Home() {
         >
           <article>
             <h2 className="text-3xl font-extrabold text-white">Interviews</h2>
-            <section className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+            <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
               {jobs.map((job) => (
                 <article
                   key={job._id}
@@ -550,7 +610,7 @@ export default function Home() {
                   </div>
                 </article>
               ))}
-            </section>
+            </div>
           </article>
         </section>
         <section ref={startNowRef} className="bg-[#000000]">
@@ -560,7 +620,7 @@ export default function Home() {
                 Start Now
               </h2>
             </div>
-            <form onSubmit={handleFormSubmit} className="max-w-xl mx-auto">
+            <form onSubmit={handleFormSubmit} className="max-w-3xl mx-auto">
               <div className="mb-4">
                 <label htmlFor="name" className="block text-lg font-medium">
                   Name
@@ -587,7 +647,7 @@ export default function Home() {
                   value={formData.company}
                   onChange={handleFormChange}
                   className="w-full px-4 py-3 rounded-lg text-white outline-none bg-[#2f2f2f]"
-                  placeholder="Goggle"
+                  placeholder="OpenAI"
                   required
                 />
               </div>
@@ -678,7 +738,7 @@ Well-versed in Software Architecture and Design - You should be able to spot fla
 Participate in code reviews.
 
 Collaborate and work with other team members to ensure we are building the right product.`}
-                  rows={4}
+                  rows={5}
                 />
               </div>
               <button

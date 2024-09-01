@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Archivo } from "next/font/google";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import User from "@/components/icon/user";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -18,19 +19,95 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
 
+  // Fetch additional data from a new endpoint
+  const resData = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/interviews`
+  );
+  const prepData = await resData.json();
+
   return {
     props: {
       job,
+      prepData, // Add the fetched data to props
     },
   };
 };
 
 const Slug = ({ job }: any) => {
   const router = useRouter();
+  const [preparationData, setPreparationData] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (job) {
+      fetchPreparationData(job.position);
+    }
+  }, [job]);
+
+  const fetchPreparationData = async (jobPosition: string) => {
+    try {
+      const res = await fetch("/api/interviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ jobPosition }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch interview preparation data");
+      }
+
+      const data = await res.json();
+      setPreparationData(data.preparationData);
+    } catch (error) {
+      console.error("Error fetching interview preparation data:", error);
+    }
+  };
 
   if (!job) {
     return null;
   }
+
+  const languages = [
+    "C",
+    "C++",
+    "C#",
+    "Java",
+    "JavaScript",
+    "Python",
+    "TypeScript",
+  ];
+
+  const developments = [
+    "Full-stack development",
+    "Frontend development",
+    "Service/application development",
+    "Design and debugging",
+    "Performance/reliability optimization",
+    "Code quality assurance",
+    "Modular design",
+    "Component reuse",
+  ];
+
+  const computings = [
+    "Developing enterprise-grade large scale cloud applications",
+  ];
+
+  const managements = ["SQL", "NoSQL", "System design"];
+
+  const engineerings = [
+    "Building and maintaining data pipelines",
+    "Ingesting, processing, storing, and serving data",
+    "Structured and unstructured data handling",
+    "Data analysis and reporting",
+  ];
+
+  const operations = [
+    "Monitoring system/product feature/service for issues",
+    "Responding within SLA timeframe",
+    "Alerting stakeholders",
+    "Incident escalation",
+  ];
 
   return (
     <>
@@ -62,7 +139,7 @@ const Slug = ({ job }: any) => {
               <h2 className="text-2xl md:text-4xl font-thin mb-4 bg-gradient-to-r from-[#B181FF] to-[#EC0AE3] text-transparent bg-clip-text">
                 Interview Preparation
               </h2>
-              <div className="metrics mb-6">
+              <div className="mb-6">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <h4 className="text-base md:text-xl font-thin text-white">
@@ -90,9 +167,9 @@ const Slug = ({ job }: any) => {
                   </div>
                 </div>
               </div>
-              <div className="cv-areas mt-6 mb-6">
+              <div className="mt-6 mb-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Programming Languages
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -101,177 +178,25 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">C</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">C++</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">C#</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">Java</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">JavaScript</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">Python</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">TypeScript</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {languages.map((language, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{language}</span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Software Development
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -280,213 +205,25 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Full-stack development
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Frontend development
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Service/application development
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Design and debugging
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Performance/reliability optimization
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Code quality assurance
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">Modular design</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">Component reuse</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {developments.map((development, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{development}</span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Cloud Computing
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -495,36 +232,25 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Developing enterprise-grade large scale cloud
-                            applications
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {computings.map((computing, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{computing}</span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Database Management
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -533,81 +259,25 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">SQL</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">NoSQL</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">System design</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {managements.map((management, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{management}</span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Data Engineering
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -616,113 +286,25 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Building and maintaining data pipelines
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Ingesting, processing, storing, and serving data
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Structured and unstructured data handling
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Data analysis and reporting
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {engineerings.map((engineering, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{engineering}</span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  <div className="cv-area p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
+                  <div className="p-3 md:p-6 rounded-2xl shadow-md bg-gray-800">
                     <h5 className="text-lg font-medium mb-3 text-white flex justify-between items-center">
                       Software Operations
                       <span className="text-xs font-bold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text text-center px-4 py-1 rounded-full">
@@ -731,108 +313,22 @@ const Slug = ({ job }: any) => {
                       </span>
                     </h5>
                     <ul className="list-none space-y-2">
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Monitoring system/product feature/service for issues
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Responding within SLA timeframe
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">
-                            Alerting stakeholders
-                          </span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                      <li className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <span className="pl-3 pr-3">Incident escalation</span>
-                        </div>
-                        <div className="relative flex items-center justify-center cursor-pointer">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                          <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
+                      {operations.map((operation, index) => (
+                        <li
+                          key={index}
+                          className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-xl p-3 flex justify-between items-center"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="pl-3 pr-3">{operation} </span>
+                          </div>
+                          <div className="relative flex items-center justify-center cursor-pointer">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
+                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                              <User />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
