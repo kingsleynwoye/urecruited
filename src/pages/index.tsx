@@ -187,8 +187,8 @@ Collaborate and work with other team members to ensure we are building the right
     }
   };
 
-  if (loading) return <Loader />;
-  if (error) return <Error />;
+  // if (loading) return <Loader />;
+  // if (error) return <Error />;
 
   return (
     <>
@@ -738,7 +738,7 @@ Well-versed in Software Architecture and Design - You should be able to spot fla
 Participate in code reviews.
 
 Collaborate and work with other team members to ensure we are building the right product.`}
-                  rows={5}
+                  rows={10}
                 />
               </div>
               <button
