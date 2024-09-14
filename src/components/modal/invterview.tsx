@@ -1,5 +1,6 @@
 import React from "react";
 import { Archivo } from "next/font/google";
+import Link from "next/link";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -76,16 +77,16 @@ const Interview: React.FC<InterviewProps> = ({ isOpen, title, onClose }) => {
               No interviews attempted yet
             </h2>
             <p className="text-gray-400 mb-4">
-              It looks like you haven't tried any interviews for this skill yet.{" "}
-              <br />
+              It looks like you haven&apos;t tried any interviews for this skill
+              yet. <br />
               Start a new chat to begin your interview preparation!
             </p>
-            <a
+            <Link
               className="mainBg text-white px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition duration-300 transform hover:scale-105"
               href="/job/60a1ef5b-2b02-46cc-8b7d-08e849c88e41/interview/005b8be6-33cc-4991-9ce3-41b959e4134b"
             >
               Start Your First Interview
-            </a>
+            </Link>
           </div>
         </div>
       </div>

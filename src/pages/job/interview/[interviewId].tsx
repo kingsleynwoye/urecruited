@@ -33,7 +33,7 @@ const interviewId = ({ interview }: any) => {
   return (
     <>
       <Head>
-        <title>{`URECRUITED - ${interview.position}`}</title>
+        {/* <title>{`URECRUITED - ${interview.position}`}</title> */}
         <meta
           name="description"
           content="Master your next job interview with URECRUITED! Train skills, get tailored advice, and receive real-time feedback to ace every question and land your dream job!"
