@@ -4,14 +4,15 @@ import { Archivo } from "next/font/google";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import User from "@/components/icon/user";
+import Interview from "@/components/modal/invterview";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { slug } = params as { slug: string };
+  const { jobId } = params as { jobId: string };
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs`);
   const jobs = await res.json();
-  const job = jobs.find((job: any) => job._id === slug) || null;
+  const job = jobs.find((job: any) => job._id === jobId) || null;
 
   if (!job) {
     return {
@@ -19,54 +20,30 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
 
-  // Fetch additional data from a new endpoint
-  const resData = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/interviews`
-  );
-  const prepData = await resData.json();
-
   return {
     props: {
       job,
-      prepData, // Add the fetched data to props
     },
   };
 };
 
-const Slug = ({ job }: any) => {
+const JobId = ({ job }: any) => {
   const router = useRouter();
-  const [preparationData, setPreparationData] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (job) {
-      fetchPreparationData(job.position);
-    }
-  }, [job]);
-
-  const fetchPreparationData = async (jobPosition: string) => {
-    try {
-      const res = await fetch("/api/interviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ jobPosition }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch interview preparation data");
-      }
-
-      const data = await res.json();
-      setPreparationData(data.preparationData);
-    } catch (error) {
-      console.error("Error fetching interview preparation data:", error);
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
 
   if (!job) {
     return null;
   }
+
+  const openModal = (title: string) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const languages = [
     "C",
@@ -112,7 +89,7 @@ const Slug = ({ job }: any) => {
   return (
     <>
       <Head>
-        <title>URECRUITED - Ace your interviews</title>
+        <title>{`URECRUITED - ${job.company}: ${job.position}`}</title>
         <meta
           name="description"
           content="Master your next job interview with URECRUITED! Train skills, get tailored advice, and receive real-time feedback to ace every question and land your dream job!"
@@ -121,11 +98,13 @@ const Slug = ({ job }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={archivo.className}>
-        <section className="flex flex-col p-5 md:p-10">
+        <section className="flex flex-col p-5 md:p-10 bg-black">
           <div className="flex justify-between">
             <div>
-              <h1 className="text-2xl md:text-4xl font-thin">{job.position}</h1>
-              <h2 className="text-2xl">{job.company}</h2>
+              <h1 className="text-2xl md:text-4xl font-thin text-[#e1e1e1]">
+                {job.position}
+              </h1>
+              <h2 className="text-2xl text-[#e1e1e1]">{job.company}</h2>
             </div>
             <button
               className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-10 w-20 rounded-full"
@@ -188,7 +167,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -215,7 +197,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -242,7 +227,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -269,7 +257,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -296,7 +287,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -323,7 +317,10 @@ const Slug = ({ job }: any) => {
                           </div>
                           <div className="relative flex items-center justify-center cursor-pointer">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-40 animate-ping cursor-pointer"></span>
-                            <button className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer">
+                            <button
+                              onClick={() => openModal("Hello")} // Open modal with the language name as title
+                              className="bg-gradient-to-r from-yellow-200 via-orange-300 to-red-400 text-white rounded-full p-2 transition-transform duration-500 ease-out transform hover:scale-125 cursor-pointer"
+                            >
                               <User />
                             </button>
                           </div>
@@ -336,9 +333,14 @@ const Slug = ({ job }: any) => {
             </div>
           </div>
         </section>
+        <Interview
+          isOpen={isModalOpen}
+          title={modalTitle}
+          onClose={closeModal}
+        />
       </main>
     </>
   );
 };
 
-export default Slug;
+export default JobId;
