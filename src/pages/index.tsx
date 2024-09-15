@@ -202,7 +202,7 @@ Collaborate and work with other team members to ensure we are building the right
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <nav
-        className={`${archivo.className} bg-black bgOpacity-50 backdrop-filter backdrop-blur-lg fixed top-0 right-0 w-full shadow-sm px-5 z-50`}
+        className={`${archivo.className} bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg fixed top-0 right-0 w-full shadow-sm px-5 z-50`}
       >
         <div className="h-20 flex items-center justify-between">
           {/* Left side: Logo and Nav Links */}
@@ -414,7 +414,7 @@ Collaborate and work with other team members to ensure we are building the right
               </svg>
             </div>
           </div>
-          <section className="pb-10 bg-black -mt-24 md:-mt-20">
+          <section className="pb-10 bg-black -mt-40">
             <div className="container mx-auto px-4">
               <div className="flex flex-wrap">
                 <div className="lg:pt-12 pt-6 w-full md:w-3/12 px-4 text-center">
@@ -598,18 +598,20 @@ Collaborate and work with other team members to ensure we are building the right
             </div>
           </div>
         </section> */}
-        <section
+        {/* <section
           ref={featuresRef}
           className="sm:px-20 px-6 flex w-full gap-24 pt-24 items-center bg-[url('/images/how-to-bg.png')]"
-        >
-          <div className="lg:w-1/2 w-full font-swiss">
-            <h2 className="font-bold text-neutral-2 text-3xl text-center md:text-left leading-relaxed text-[#e1e1e1]">
-              Features
-            </h2>
-            <div className="flex flex-col gap-10 sm:gap-0 w-full text-neutral-3 my-14">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col items-center">
-                  {/* <svg
+        > */}
+        <section ref={featuresRef} className="bg-[#000000]">
+          <div className="sm:px-20 px-6 flex w-full gap-24 pt-24 items-center">
+            <div className="lg:w-1/2 w-full">
+              <h2 className="font-bold text-neutral-2 text-3xl text-center md:text-left leading-relaxed text-[#e1e1e1]">
+                Features
+              </h2>
+              <div className="flex flex-col gap-10 sm:gap-0 w-full text-neutral-3 my-14">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col items-center">
+                    {/* <svg
                     width="57"
                     height="57"
                     viewBox="0 0 57 57"
@@ -628,107 +630,107 @@ Collaborate and work with other team members to ensure we are building the right
                       fill="white"
                     ></path>
                   </svg> */}
-                  <svg
-                    width="58"
-                    height="57"
-                    viewBox="0 0 58 57"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="29"
-                      cy="28.5"
-                      r="28.5"
-                      fill="#8936ea"
-                      fillOpacity="0.5"
-                    ></circle>
-                    <path
-                      d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
-                      fill="white"
-                    ></path>
-                  </svg>
-                  <div className="hidden sm:block">
                     <svg
-                      width="2"
-                      height="129"
-                      viewBox="0 0 2 129"
+                      width="58"
+                      height="57"
+                      viewBox="0 0 58 57"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <line
-                        x1="1"
-                        y1="2.18557e-08"
-                        x2="0.999994"
-                        y2="129"
-                        stroke="#6B6B6B"
-                        strokeDasharray="12 12"
-                      ></line>
+                      <circle
+                        cx="29"
+                        cy="28.5"
+                        r="28.5"
+                        fill="#8936ea"
+                        fillOpacity="0.5"
+                      ></circle>
+                      <path
+                        d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
+                        fill="white"
+                      ></path>
                     </svg>
+                    <div className="hidden sm:block">
+                      <svg
+                        width="2"
+                        height="129"
+                        viewBox="0 0 2 129"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line
+                          x1="1"
+                          y1="2.18557e-08"
+                          x2="0.999994"
+                          y2="129"
+                          stroke="#6B6B6B"
+                          strokeDasharray="12 12"
+                        ></line>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-center sm:text-left">
+                    <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
+                      Master Every Topic
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#e1e1e1]">
+                      Sharpen your answer to every question through our
+                      AI-powered interview
+                    </p>
                   </div>
                 </div>
-                <div className="text-center sm:text-left">
-                  <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
-                    Master Every Topic
-                  </h2>
-                  <p className="text-sm sm:text-base text-[#e1e1e1]">
-                    Sharpen your answer to every question through our AI-powered
-                    interview
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col items-center">
-                  <svg
-                    width="58"
-                    height="57"
-                    viewBox="0 0 58 57"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="29"
-                      cy="28.5"
-                      r="28.5"
-                      fill="#8936ea"
-                      fillOpacity="0.5"
-                    ></circle>
-                    <path
-                      d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
-                      fill="white"
-                    ></path>
-                  </svg>
-                  <div className="hidden sm:block">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col items-center">
                     <svg
-                      width="2"
-                      height="129"
-                      viewBox="0 0 2 129"
+                      width="58"
+                      height="57"
+                      viewBox="0 0 58 57"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <line
-                        x1="1"
-                        y1="2.18557e-08"
-                        x2="0.999994"
-                        y2="129"
-                        stroke="#6B6B6B"
-                        strokeDasharray="12 12"
-                      ></line>
+                      <circle
+                        cx="29"
+                        cy="28.5"
+                        r="28.5"
+                        fill="#8936ea"
+                        fillOpacity="0.5"
+                      ></circle>
+                      <path
+                        d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
+                        fill="white"
+                      ></path>
                     </svg>
+                    <div className="hidden sm:block">
+                      <svg
+                        width="2"
+                        height="129"
+                        viewBox="0 0 2 129"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line
+                          x1="1"
+                          y1="2.18557e-08"
+                          x2="0.999994"
+                          y2="129"
+                          stroke="#6B6B6B"
+                          strokeDasharray="12 12"
+                        ></line>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-center sm:text-left">
+                    <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
+                      Tailored Recommendation
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#e1e1e1]">
+                      Get expert advice on how to show your expertise in each
+                      question effectively
+                    </p>
                   </div>
                 </div>
-                <div className="text-center sm:text-left">
-                  <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
-                    Tailored Recommendation
-                  </h2>
-                  <p className="text-sm sm:text-base text-[#e1e1e1]">
-                    Get expert advice on how to show your expertise in each
-                    question effectively
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col items-center">
-                  {/* <svg
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col items-center">
+                    {/* <svg
                     width="58"
                     height="57"
                     viewBox="0 0 58 57"
@@ -749,78 +751,79 @@ Collaborate and work with other team members to ensure we are building the right
                       fill="white"
                     ></path>
                   </svg> */}
-                  <svg
-                    width="58"
-                    height="57"
-                    viewBox="0 0 58 57"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="29"
-                      cy="28.5"
-                      r="28.5"
-                      fill="#8936ea"
-                      fillOpacity="0.5"
-                    ></circle>
-                    <path
-                      d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
-                      fill="white"
-                    ></path>
-                  </svg>
-                  <div className="hidden sm:block">
                     <svg
-                      width="2"
-                      height="129"
-                      viewBox="0 0 2 129"
+                      width="58"
+                      height="57"
+                      viewBox="0 0 58 57"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <line
-                        x1="1"
-                        y1="2.18557e-08"
-                        x2="0.999994"
-                        y2="129"
-                        stroke="#6B6B6B"
-                        strokeDasharray="12 12"
-                      ></line>
+                      <circle
+                        cx="29"
+                        cy="28.5"
+                        r="28.5"
+                        fill="#8936ea"
+                        fillOpacity="0.5"
+                      ></circle>
+                      <path
+                        d="M21.5 16C20.1739 16 18.9021 16.5268 17.9645 17.4645C17.0268 18.4021 16.5 19.6739 16.5 21V31C16.5 31.6566 16.6293 32.3068 16.8806 32.9134C17.1319 33.52 17.5002 34.0712 17.9645 34.5355C18.9021 35.4732 20.1739 36 21.5 36H31.5C32.1566 36 32.8068 35.8707 33.4134 35.6194C34.02 35.3681 34.5712 34.9998 35.0355 34.5355C35.4998 34.0712 35.8681 33.52 36.1194 32.9134C36.3707 32.3068 36.5 31.6566 36.5 31V21C36.5 20.3434 36.3707 19.6932 36.1194 19.0866C35.8681 18.48 35.4998 17.9288 35.0355 17.4645C34.5712 17.0002 34.02 16.6319 33.4134 16.3806C32.8068 16.1293 32.1566 16 31.5 16H21.5ZM32.208 23.708L26.208 29.708C26.1151 29.8011 26.0048 29.875 25.8833 29.9254C25.7618 29.9758 25.6315 30.0018 25.5 30.0018C25.3685 30.0018 25.2382 29.9758 25.1167 29.9254C24.9952 29.875 24.8849 29.8011 24.792 29.708L21.792 26.708C21.699 26.615 21.6253 26.5046 21.575 26.3832C21.5246 26.2617 21.4987 26.1315 21.4987 26C21.4987 25.8685 21.5246 25.7383 21.575 25.6168C21.6253 25.4954 21.699 25.385 21.792 25.292C21.885 25.199 21.9954 25.1253 22.1168 25.075C22.2383 25.0246 22.3685 24.9987 22.5 24.9987C22.6315 24.9987 22.7617 25.0246 22.8832 25.075C23.0046 25.1253 23.115 25.199 23.208 25.292L25.5 27.586L30.792 22.292C30.9798 22.1042 31.2344 21.9987 31.5 21.9987C31.7656 21.9987 32.0202 22.1042 32.208 22.292C32.3958 22.4798 32.5013 22.7344 32.5013 23C32.5013 23.2656 32.3958 23.5202 32.208 23.708ZM22.5 38C23.412 39.214 24.864 40 26.5 40H31.5C33.8869 40 36.1761 39.0518 37.864 37.364C39.5518 35.6761 40.5 33.3869 40.5 31V24C40.5 22.364 39.714 20.912 38.5 20V31C38.5 32.8565 37.7625 34.637 36.4497 35.9497C35.137 37.2625 33.3565 38 31.5 38H22.5Z"
+                        fill="white"
+                      ></path>
                     </svg>
+                    <div className="hidden sm:block">
+                      <svg
+                        width="2"
+                        height="129"
+                        viewBox="0 0 2 129"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line
+                          x1="1"
+                          y1="2.18557e-08"
+                          x2="0.999994"
+                          y2="129"
+                          stroke="#6B6B6B"
+                          strokeDasharray="12 12"
+                        ></line>
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                <div className="text-center sm:text-left">
-                  <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
-                    Real-Time Feedback
-                  </h2>
-                  <p className="text-sm sm:text-base text-[#e1e1e1]">
-                    Improve your answers through real-time feedback
-                  </p>
+                  <div className="text-center sm:text-left">
+                    <h2 className="font-bold text-lg sm:text-xl leading-loose mb-2 sm:mb-6 text-[#e1e1e1]">
+                      Real-Time Feedback
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#e1e1e1]">
+                      Improve your answers through real-time feedback
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="w-1/2 hidden lg:block">
-            <Image
-              src="/images/feature1.png"
-              alt="Howto Image"
-              loading="lazy"
-              width={500}
-              height={500}
-              decoding="async"
-              data-nimg="1"
-              className=""
-              style={{ color: "transparent" }}
-            />
-            <Image
-              src="/images/feature2.png"
-              alt="Howto Image"
-              loading="lazy"
-              width={500}
-              height={500}
-              decoding="async"
-              data-nimg="1"
-              className=""
-              style={{ color: "transparent" }}
-            />
+            <div className="w-1/2 hidden lg:block">
+              <Image
+                src="/images/feature1.png"
+                alt="Howto Image"
+                loading="lazy"
+                width={500}
+                height={500}
+                decoding="async"
+                data-nimg="1"
+                className=""
+                style={{ color: "transparent" }}
+              />
+              <Image
+                src="/images/feature2.png"
+                alt="Howto Image"
+                loading="lazy"
+                width={500}
+                height={500}
+                decoding="async"
+                data-nimg="1"
+                className=""
+                style={{ color: "transparent" }}
+              />
+            </div>
           </div>
         </section>
         <section
@@ -835,7 +838,8 @@ Collaborate and work with other team members to ensure we are building the right
               {jobs.map((job) => (
                 <article
                   key={job._id}
-                  className="bg-[#212121] bgOpacity-20 backdrop-filter backdrop-blur-lg border border-white borderOpacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
+                  // className="bg-[#212121] bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
+                  className="bg-white bg-opacity-15 rounded-lg shadow-lg relative overflow-hidden"
                 >
                   <div className="p-4 space-y-3">
                     <div className="text-center">
