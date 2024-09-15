@@ -368,7 +368,7 @@ Collaborate and work with other team members to ensure we are building the right
             <div
               className="absolute top-0 w-full h-full bg-center bg-cover"
               style={{
-                backgroundImage: "url(/background.png)",
+                backgroundImage: "url(/images/background.png)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
