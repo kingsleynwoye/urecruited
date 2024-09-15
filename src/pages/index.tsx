@@ -383,7 +383,7 @@ Collaborate and work with other team members to ensure we are building the right
               <div className="items-center flex flex-wrap">
                 <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
                   <div className="">
-                    <h1 className="text-[#e1e1e1] font-semibold text-4xl md:text-7xl">
+                    <h1 className="text-g font-bold text-4xl md:text-7xl">
                       URECRUITED
                     </h1>
                     <p className="mt-4 text-lg text-gray-200">
