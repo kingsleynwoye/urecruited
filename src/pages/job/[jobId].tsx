@@ -110,7 +110,7 @@ const JobId = ({ job }: any) => {
               className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white h-10 w-20 rounded-full"
               onClick={() => router.back()}
             >
-              Go Back
+              Back
             </button>
           </div>
           <div className="flex flex-col gap-2">
