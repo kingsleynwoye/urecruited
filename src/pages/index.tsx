@@ -414,7 +414,7 @@ Collaborate and work with other team members to ensure we are building the right
               </svg>
             </div>
           </div>
-          <section className="pb-10 bg-black -mt-40">
+          <section className="pb-10 bg-black -mt-60 md:-mt-40">
             <div className="container mx-auto px-4">
               <div className="flex flex-wrap">
                 <div className="lg:pt-12 pt-6 w-full md:w-3/12 px-4 text-center">
@@ -994,7 +994,7 @@ Collaborate and work with other team members to ensure we are building the right
                   isLoading ? "cursor-wait" : "cursor-pointer"
                 }`}
               >
-                {isLoading ? "Sending..." : "Send"}
+                {isLoading ? "Please wait..." : "Continue"}
               </button>
             </form>
           </div>
