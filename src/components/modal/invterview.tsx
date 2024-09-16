@@ -6,11 +6,21 @@ const archivo = Archivo({ subsets: ["latin"] });
 
 interface InterviewProps {
   isOpen: boolean;
-  title: string;
+  jobId: string;
+  interviewId: string;
+  jobName: string;
+  skillName: string;
   onClose: () => void;
 }
 
-const Interview: React.FC<InterviewProps> = ({ isOpen, title, onClose }) => {
+const Interview: React.FC<InterviewProps> = ({
+  isOpen,
+  jobId,
+  interviewId,
+  jobName,
+  skillName,
+  onClose,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -33,7 +43,7 @@ const Interview: React.FC<InterviewProps> = ({ isOpen, title, onClose }) => {
               d="M0 0L25 0C38.8071 0 50 11.1929 50 25C50 38.8071 38.8071 50 25 50C11.1929 50 0 38.8071 0 25L0 0Z"
               fill="#03053D"
             />
-            <g clip-path="url(#clip0_336_19624)">
+            <g clipPath="url(#clip0_336_19624)">
               <path
                 d="M24.9999 22.8781L32.4249 15.4531L34.5459 17.5741L27.1209 24.9991L34.5459 32.4241L32.4249 34.5451L24.9999 27.1201L17.5749 34.5451L15.4539 32.4241L22.8789 24.9991L15.4539 17.5741L17.5749 15.4531L24.9999 22.8781Z"
                 fill="white"
@@ -51,10 +61,10 @@ const Interview: React.FC<InterviewProps> = ({ isOpen, title, onClose }) => {
             </defs>
           </svg>
         </button>
-        <h3 className="text-2xl font-medium mb-4 mainColor">
-          Technical Background:
-          <span className="font-bold text-3xl pl-2 secondaryColor">
-            Software development
+        <h3 className="text-lg md:text-2xl font-medium mb-4 mainColor">
+          {jobName}:
+          <span className="text-xl md:text-3xl font-bold pl-2 secondaryColor">
+            {skillName}
           </span>
         </h3>
         <div className="interview-history mt-6 max-h-[90%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-00">
@@ -66,24 +76,24 @@ const Interview: React.FC<InterviewProps> = ({ isOpen, title, onClose }) => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="text-gray-400 mb-4"
             >
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-base md:text-2xl font-bold text-white mb-2">
               No interviews attempted yet
             </h2>
-            <p className="text-gray-400 mb-4">
+            <p className="text-sm md:text-base text-gray-400 mb-4">
               It looks like you haven&apos;t tried any interviews for this skill
               yet. <br />
               Start a new chat to begin your interview preparation!
             </p>
             <Link
-              className="mainBg text-white px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition duration-300 transform hover:scale-105"
-              href="/job/60a1ef5b-2b02-46cc-8b7d-08e849c88e41/interview/005b8be6-33cc-4991-9ce3-41b959e4134b"
+              href={`/job/${jobId}/interview/${interviewId}`}
+              className="mainBg text-white px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition duration-300 transform hover:scale-105 text-sm md:text-base"
             >
               Start Your First Interview
             </Link>
