@@ -6,6 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Loader } from "@/components/loader";
 import { Error } from "@/components/error";
+import { data } from "@/utils";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -14,19 +15,19 @@ type Message = {
   sender: "user" | "bot";
 };
 
-type Job = {
-  _id: number;
-  name: string;
-  company: string;
-  position: string;
-  jobDescription: string;
-};
+// type Job = {
+//   _id: number;
+//   name: string;
+//   company: string;
+//   position: string;
+//   jobDescription: string;
+// };
 
 export default function Home() {
   // const [messages, setMessages] = useState<Message[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -40,11 +41,11 @@ export default function Home() {
   useEffect(() => {
     async function fetchJobs() {
       try {
-        const response = await fetch("/api/jobs");
-        if (!response.ok) {
-          console.error(`Error: ${response.status}`);
-        }
-        const data: Job[] = await response.json();
+        // const response = await fetch("/api/jobs");
+        // if (!response.ok) {
+        //   console.error(`Error: ${response.status}`);
+        // }
+        // const data: Job[] = await response.json();
         setJobs(data);
       } catch (err: any) {
         setError(err.message);
@@ -835,20 +836,22 @@ Collaborate and work with other team members to ensure we are building the right
               Interviews
             </h2>
             <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 text-[#e1e1e1]">
-              {jobs.map((job) => (
+              {jobs?.map((job: any) => (
                 <article
-                  key={job._id}
+                  key={job.candidate.user.id}
                   // className="bg-[#212121] bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
                   className="bg-white bg-opacity-15 rounded-lg shadow-lg relative overflow-hidden"
                 >
                   <div className="p-4 space-y-3">
                     <div className="text-center">
-                      <h3 className="font-bold">{job.position}</h3>
-                      <h4 className="pb-4 text-base">{job.company}</h4>
-                      <h5 className="text-base">Candidate: {job.name}</h5>
+                      <h3 className="font-bold">{job.position.name}</h3>
+                      <h4 className="pb-4 text-base">{job.position.company}</h4>
+                      <h5 className="text-base">
+                        Candidate: {job.candidate.user.name}
+                      </h5>
                     </div>
                     <div>
-                      <Link href={`/job/${job._id}`}>
+                      <Link href={`/job/${job.id}`}>
                         <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-[#e1e1e1] h-14 md:h-12 w-full rounded-full">
                           Review
                         </button>
