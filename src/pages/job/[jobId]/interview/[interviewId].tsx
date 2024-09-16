@@ -28,20 +28,9 @@ const archivo = Archivo({ subsets: ["latin"] });
 //   };
 // };
 
-// Function to find the skill by its id
-const findSkillById = (data: any[], id: string) => {
-  for (const interview of data) {
-    for (const knowledgeArea of interview.position.knowledgeAreas) {
-      const skill = knowledgeArea.skills.find((skill: any) => skill.id === id);
-      if (skill) return skill;
-    }
-  }
-  return null; // Return null if no skill is found
-};
-
-const interviewId = () => {
+const InterviewId = () => {
   const router = useRouter();
-  console.log("router", router);
+  // console.log("router", router);
 
   const { interviewId, jobId } = router.query;
   console.log("interviewId", interviewId);
@@ -53,6 +42,19 @@ const interviewId = () => {
     (interview: any) => interview?.position.id === interviewId
   );
   console.log("interview", interview);
+
+  // Function to find the skill by its id
+  const findSkillById = (data: any[], id: string) => {
+    for (const interview of data) {
+      for (const knowledgeArea of interview.position.knowledgeAreas) {
+        const skill = knowledgeArea.skills.find(
+          (skill: any) => skill.id === id
+        );
+        if (skill) return skill;
+      }
+    }
+    return null; // Return null if no skill is found
+  };
 
   const selectedSkill = skillId ? findSkillById(data, skillId) : null;
   console.log("selectedSkill", selectedSkill);
@@ -112,7 +114,7 @@ const interviewId = () => {
             <div>
               <Link
                 href={`/job/${jobId}`}
-                className="mr-4 px-4 py-2 bg-secondaryBg rounded-lg text-white mainBg"
+                className="px-4 py-2 bg-secondaryBg rounded-full text-white mainBg"
               >
                 Back
               </Link>
@@ -189,4 +191,4 @@ const interviewId = () => {
   );
 };
 
-export default interviewId;
+export default InterviewId;

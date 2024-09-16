@@ -61,9 +61,9 @@ const Interview: React.FC<InterviewProps> = ({
             </defs>
           </svg>
         </button>
-        <h3 className="text-2xl font-medium mb-4 mainColor">
+        <h3 className="text-lg md:text-2xl font-medium mb-4 mainColor">
           {jobName}:
-          <span className="font-bold text-3xl pl-2 secondaryColor">
+          <span className="text-xl md:text-3xl font-bold pl-2 secondaryColor">
             {skillName}
           </span>
         </h3>
@@ -83,17 +83,17 @@ const Interview: React.FC<InterviewProps> = ({
             >
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-base md:text-2xl font-bold text-white mb-2">
               No interviews attempted yet
             </h2>
-            <p className="text-gray-400 mb-4">
+            <p className="text-sm md:text-base text-gray-400 mb-4">
               It looks like you haven&apos;t tried any interviews for this skill
               yet. <br />
               Start a new chat to begin your interview preparation!
             </p>
             <Link
               href={`/job/${jobId}/interview/${interviewId}`}
-              className="mainBg text-white px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition duration-300 transform hover:scale-105"
+              className="mainBg text-white px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition duration-300 transform hover:scale-105 text-sm md:text-base"
             >
               Start Your First Interview
             </Link>
